@@ -143,10 +143,21 @@ for i in generation_range:
 test = population[1]
 test.shape = (1, 784)
 result = sess.run(y, feed_dict={x: test})
-print ("New: ", result)
+result_duplicate=result
+print("result duplicate:",result_duplicate)
+i_max=np.argmax(result)
+print(i_max)            #finding the max probability
+print(result.astype)
+print(result.flatten())#flttening the numpy array from nd to 1D
+result_list = result.flatten()  #saving array in another list
+for j in range(len(result_list)):
+    if result_list[i_max]==result_list[j]:
+        result_list[j]=1
+    else:
+        result_list[j]=0        #making other prediction=0 for clearer results
+print("result duplicate:",result_duplicate)
+print ("New: ", result_list)
 
-# Print image
 test.shape = (28, 28)
 plt.imshow(test, cmap='gray')
 plt.savefig("fig2.png")
-
