@@ -1,0 +1,9 @@
+# Advanced algorithms project 2017
+
+## Genetic adversarial exmples
+
+Here i am trying to generate adversarial examples with genetic algorithms. I'm currently using Mnist dataset. The code is based on these 2 papers
+* http://dl.acm.org/citation.cfm?id=2955178
+* http://www.evolvingai.org/files/DNNsEasilyFooled_cvpr15.pdf
+
+
