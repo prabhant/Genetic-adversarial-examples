@@ -12,7 +12,7 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets('MNIST_data', one_hot=True)   # This is the MNIST data
+mnist = input_data.read_data_sets('input/data', one_hot=True)   # This is the MNIST data
 
 mutation_degree = 0.5                              # Mutation probability
 mutation_number = int(mutation_degree * 784)              # Number of elements to mutate
@@ -104,7 +104,7 @@ def fitness(image, target_image, score, target_score, step):
 y = tf.nn.softmax(tf.matmul(x, W) + b)
 
 # Restore variables
-saver.restore(sess, 'linear_model/linear_model.ckpt')
+saver.restore(sess, 'fashion_model/model_fashion.ckpt')
 
 # Prints the initial classification
 result = sess.run(y, feed_dict={x: batch[0]})
