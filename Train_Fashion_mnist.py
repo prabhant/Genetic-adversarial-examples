@@ -4,6 +4,7 @@ import seaborn as sns
 import tensorflow as tf
 from tensorflow.python.framework import ops
 
+
 # Import Fashion MNIST data with one-hot encoding
 from tensorflow.examples.tutorials.mnist import input_data
 
@@ -129,7 +130,7 @@ saver = tf.train.Saver()
 
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    for i in range(5000):
+    for i in range(500):
         batch = mnist.train.next_batch(50)
         if i % 100 == 0:
             train_accuracy = accuracy.eval(feed_dict={
@@ -139,4 +140,8 @@ with tf.Session() as sess:
 
     print('test accuracy %g' % accuracy.eval(feed_dict={
         x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
-    save_path = saver.save(sess, "fashion_model/model_fashion.ckpt")
+    save_path = saver.save(sess, "fashion_model/fashion_model.ckpt")
+
+
+
+

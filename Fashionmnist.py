@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets('MNIST_data', one_hot=True)   # This is the MNIST data
+mnist = input_data.read_data_sets('input/data', one_hot=True)
 
 mutation_degree = 0.5                              # Mutation probability
 mutation_number = int(mutation_degree * 784)              # Number of elements to mutate
@@ -16,7 +16,7 @@ generation_number = 1000                         # Number of generations
 generation_range = range(generation_number)
 tournaments = 3                            # Tournament sizes
 guassian_value = 0.007                         # Determines magnitude of mutations (guassian standard deviation)
-fitness_sensativity = 0.0000005             # Used in fitness algorithm, multiplies the distance between 2 images
+fitness_sensativity = 0.0000005
 
 sess = tf.InteractiveSession()
 
@@ -26,10 +26,10 @@ x = tf.placeholder(tf.float32, shape=[None, 784])   # Feature tensor = 28x28
 W = tf.Variable(tf.zeros([784, 10]))                # Weights
 b = tf.Variable(tf.zeros([10]))                     # Biases
 
-sess.run(tf.global_variables_initializer())         # Initializes TensorFlow variables and model saver
+sess.run(tf.global_variables_initializer())
 saver = tf.train.Saver()
 
-batch = mnist.test.next_batch(1)                    # I noticed the second MNIST image is a 2 so I just hard coded it
+batch = mnist.test.next_batch(1)
 batch = mnist.test.next_batch(1)
 two = batch[0]                                      # two is our test image
 population = np.zeros((population_number, 784))
@@ -59,7 +59,6 @@ def generate_mutation(chromosome):
     return chromosome
 
 
-# Crossover function (two point crossover)
 def crossover(chromosome1, chromosome2):
     crossover_points = rand.sample(mutation_range, 2)
 
@@ -70,7 +69,6 @@ def crossover(chromosome1, chromosome2):
     return chromosome1, chromosome2
 
 
-# Tournament function (winner moves on with 100% probability)
 def tournament(images, target_image, scores, target_score, step):
     fitness_value = np.zeros(tournaments)
     for i in range(tournaments):
@@ -84,19 +82,14 @@ def tournament(images, target_image, scores, target_score, step):
 # Fitness function
 def fitness(image, target_image, score, target_score, step):
     fitness_value = -(fitness_sensativity * np.linalg.norm(image - target_image) + (target_score-score))
-    # The above equation is actually super sensitive to the first part, maybe worth reformulating somehow
-
-    # If you zero out the second part, all the mutations are suppressed and zeroing out the first part causes
-    # fast convergence to >99% certainty. But the balance needs to be tuned.
 
     return fitness_value
 
 
-# Model from Tutorial 1
-y = tf.nn.softmax(tf.matmul(x, W) + b)
+y = tf.matmul(x, W) + b
 
 # Restore variables
-saver.restore(sess, 'linear_model/linear_model.ckpt')
+saver.restore(sess, 'fashion_model/fashion_model.ckpt')
 
 # Prints the initial classification
 result = sess.run(y, feed_dict={x: batch[0]})
@@ -106,12 +99,8 @@ two.shape = (784)
 
 # Main algorithm
 for i in generation_range:
-    scores = sess.run(y, feed_dict={x: population})     # Score the entire population = target class % confidence
+    scores = sess.run(y, feed_dict={x: population})
 
-    # In each generation, we hold population/2 number of tournaments, 2 at a time, each with a randomly selected
-    # sample from the population (with replacement). 60% of the time, the tournament winners crossbreed and their
-    # children move on to the next generation, 40% of the time the tournament winners move on the next generation.
-    # Every individual that moves on is mutated.
     for j in range(population_number//2):
         selection = rand.sample(population_range, tournaments)
         parent1 = tournament([population[selection[0]], population[selection[1]], population[selection[2]]], two,
@@ -130,8 +119,7 @@ for i in generation_range:
 
     population = children
 
-# Take a sample from out final population, (I just took the first since they all should have converged to be similar)
-# and checks the classification
+
 test = population[1]
 test.shape = (1, 784)
 result = sess.run(y, feed_dict={x: test})

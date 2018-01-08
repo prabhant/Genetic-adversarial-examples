@@ -1,6 +1,6 @@
 # Just a test script to see the trained model's confidence levels
 from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets('MNIST_data', one_hot=True) # This is our training data
+mnist = input_data.read_data_sets('input/data', one_hot=True) # This is our training data
 
 import tensorflow as tf
 sess = tf.InteractiveSession()
@@ -18,7 +18,7 @@ saver = tf.train.Saver()
 y = tf.nn.softmax(tf.matmul(x, W) + b)
 
 # Restore variables
-saver.restore(sess, 'linear_model/linear_model.ckpt')
+saver.restore(sess, 'fashion_model/fashion_model.ckpt')
 
 # Outputs y and y_ for first 100 test images
 for i in range(100):
