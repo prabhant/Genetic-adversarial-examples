@@ -86,10 +86,10 @@ def fitness(image, target_image, score, target_score, step):
     return fitness_value
 
 
-y = tf.matmul(x, W) + b
+y = tf.nn.softmax(tf.matmul(x, W) + b)
 
 # Restore variables
-saver.restore(sess, 'fashion_model/fashion_model.ckpt')
+#saver.restore(sess, 'fashion_model/fashion_model.ckpt')
 
 # Prints the initial classification
 result = sess.run(y, feed_dict={x: batch[0]})
