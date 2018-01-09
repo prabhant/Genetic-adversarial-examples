@@ -2,8 +2,9 @@
 
 ## Genetic adversarial exmples
 
-Here i am trying to generate adversarial examples with genetic algorithms. I'm currently using Mnist dataset. The code is based on these 2 papers
+Here i am trying to generate adversarial examples with genetic algorithms. I'm currently using Mnist  and fasion Mnist dataset. The code is based on these 2 papers
 * http://dl.acm.org/citation.cfm?id=2955178
 * http://www.evolvingai.org/files/DNNsEasilyFooled_cvpr15.pdf
 
+The code sometimes generate even unrecognizable images which are trated as a particular class by a classifier
 
