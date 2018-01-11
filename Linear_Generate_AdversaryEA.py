@@ -1,11 +1,3 @@
-# Test script, to generate adversarial images against a previously trained linear classifier model
-
-# I base my code on these two papers:
-# http://www.evolvingai.org/files/DNNsEasilyFooled_cvpr15.pdf
-# http://dl.acm.org/citation.cfm?id=2955178
-# Instead of fast gradient sign it uses a genetic algorithm so it should be adaptable against all neural networks
-# All code is my own, did not copy anything
-
 
 import random as rand
 import numpy as np
